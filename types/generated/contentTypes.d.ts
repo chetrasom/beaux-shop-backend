@@ -424,20 +424,17 @@ export interface ApiProductProduct extends Schema.CollectionType {
     featured: Attribute.Boolean;
     shipping: Attribute.Boolean;
     slug: Attribute.UID<'api::product.product', 'name'>;
-    stars: Attribute.Integer;
+    stars: Attribute.Decimal;
     categories: Attribute.Relation<
       'api::product.product',
       'manyToMany',
       'api::category.category'
     >;
-    collections: Attribute.Boolean &
-      Attribute.Required &
-      Attribute.DefaultTo<false>;
-    new_product: Attribute.Boolean &
-      Attribute.Required &
-      Attribute.DefaultTo<false>;
+    collections: Attribute.Boolean & Attribute.DefaultTo<false>;
+    new_product: Attribute.Boolean & Attribute.DefaultTo<false>;
     product_type: Attribute.String & Attribute.Required;
     brand: Attribute.String;
+    detail: Attribute.RichText & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

@@ -67,7 +67,7 @@
       "targetField": "name"
     },
     "stars": {
-      "type": "integer"
+      "type": "decimal"
     },
     "categories": {
       "type": "relation",
@@ -78,12 +78,12 @@
     "collections": {
       "type": "boolean",
       "default": false,
-      "required": true
+      "required": false
     },
     "new_product": {
       "type": "boolean",
       "default": false,
-      "required": true
+      "required": false
     },
     "product_type": {
       "type": "string",
@@ -91,6 +91,10 @@
     },
     "brand": {
       "type": "string"
+    },
+    "detail": {
+      "type": "richtext",
+      "required": true
     }
   }
 }

@@ -362,6 +362,99 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+export interface ApiCategoryCategory extends Schema.CollectionType {
+  collectionName: 'categories';
+  info: {
+    singularName: 'category';
+    pluralName: 'categories';
+    displayName: 'category';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required;
+    slug: Attribute.UID<'api::category.category', 'name'>;
+    products: Attribute.Relation<
+      'api::category.category',
+      'manyToMany',
+      'api::product.product'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::category.category',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::category.category',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiProductProduct extends Schema.CollectionType {
+  collectionName: 'products';
+  info: {
+    singularName: 'product';
+    pluralName: 'products';
+    displayName: 'product';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required;
+    price: Attribute.Decimal & Attribute.Required;
+    discountPrice: Attribute.Decimal &
+      Attribute.Required &
+      Attribute.DefaultTo<0>;
+    description: Attribute.RichText;
+    images: Attribute.Media;
+    thumbnail: Attribute.Media;
+    saving: Attribute.Integer & Attribute.DefaultTo<0>;
+    stock: Attribute.Integer & Attribute.DefaultTo<100>;
+    reviews: Attribute.Integer;
+    rating: Attribute.Decimal;
+    featured: Attribute.Boolean & Attribute.DefaultTo<false>;
+    shipping: Attribute.Boolean & Attribute.DefaultTo<false>;
+    slug: Attribute.UID<'api::product.product', 'name'>;
+    stars: Attribute.Decimal;
+    categories: Attribute.Relation<
+      'api::product.product',
+      'manyToMany',
+      'api::category.category'
+    >;
+    collections: Attribute.Boolean & Attribute.DefaultTo<false>;
+    new_product: Attribute.Boolean & Attribute.DefaultTo<false>;
+    product_type: Attribute.String & Attribute.Required;
+    brand: Attribute.String;
+    detail: Attribute.RichText & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::product.product',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::product.product',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -677,99 +770,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
-export interface ApiCategoryCategory extends Schema.CollectionType {
-  collectionName: 'categories';
-  info: {
-    singularName: 'category';
-    pluralName: 'categories';
-    displayName: 'category';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    name: Attribute.String & Attribute.Required;
-    slug: Attribute.UID<'api::category.category', 'name'>;
-    products: Attribute.Relation<
-      'api::category.category',
-      'manyToMany',
-      'api::product.product'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::category.category',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::category.category',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiProductProduct extends Schema.CollectionType {
-  collectionName: 'products';
-  info: {
-    singularName: 'product';
-    pluralName: 'products';
-    displayName: 'product';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    name: Attribute.String & Attribute.Required;
-    price: Attribute.Decimal & Attribute.Required;
-    discountPrice: Attribute.Decimal &
-      Attribute.Required &
-      Attribute.DefaultTo<0>;
-    description: Attribute.RichText;
-    images: Attribute.Media;
-    thumbnail: Attribute.Media;
-    saving: Attribute.Integer & Attribute.DefaultTo<0>;
-    stock: Attribute.Integer & Attribute.DefaultTo<100>;
-    reviews: Attribute.Integer;
-    rating: Attribute.Decimal;
-    featured: Attribute.Boolean & Attribute.DefaultTo<false>;
-    shipping: Attribute.Boolean & Attribute.DefaultTo<false>;
-    slug: Attribute.UID<'api::product.product', 'name'>;
-    stars: Attribute.Decimal;
-    categories: Attribute.Relation<
-      'api::product.product',
-      'manyToMany',
-      'api::category.category'
-    >;
-    collections: Attribute.Boolean & Attribute.DefaultTo<false>;
-    new_product: Attribute.Boolean & Attribute.DefaultTo<false>;
-    product_type: Attribute.String & Attribute.Required;
-    brand: Attribute.String;
-    detail: Attribute.RichText & Attribute.Required;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::product.product',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::product.product',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -780,14 +780,14 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+      'api::category.category': ApiCategoryCategory;
+      'api::product.product': ApiProductProduct;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::i18n.locale': PluginI18NLocale;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
-      'api::category.category': ApiCategoryCategory;
-      'api::product.product': ApiProductProduct;
     }
   }
 }

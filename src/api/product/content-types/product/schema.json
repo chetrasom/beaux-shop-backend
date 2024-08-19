@@ -22,7 +22,8 @@
     },
     "discountPrice": {
       "type": "decimal",
-      "required": true
+      "required": true,
+      "default": 0
     },
     "description": {
       "type": "richtext"
@@ -45,10 +46,12 @@
     },
     "saving": {
       "type": "integer",
-      "required": false
+      "required": false,
+      "default": 0
     },
     "stock": {
-      "type": "integer"
+      "type": "integer",
+      "default": 100
     },
     "reviews": {
       "type": "integer"
@@ -57,10 +60,12 @@
       "type": "decimal"
     },
     "featured": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false
     },
     "shipping": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false
     },
     "slug": {
       "type": "uid",
